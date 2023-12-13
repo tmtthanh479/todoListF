@@ -61,7 +61,7 @@ const Main = () => {
           event.preventDefault();
         }}
       >
-        <div className=" justify-center flex  ">
+        <div className=" justify-center flex">
           <div className="text-center ">
             <div className="p-10">
               <p className=" text-7xl font-bold">todos</p>
@@ -96,7 +96,7 @@ const Main = () => {
                     </div>
                   </ul>
                 ))}
-                <div className="flex ">
+                <div className="flex border-t-[1px]  py-5">
                   <div className="items-start">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
                   <div className="flex items-center mx-auto">
                     <div
