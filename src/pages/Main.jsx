@@ -173,9 +173,9 @@ const Main = () => {
                     Completed
                   </button>
                 </div>
-                <div className="cursor-pointer hover:underline items-center flex" onClick={handleClearCompleted}>
+                {/* <div className="cursor-pointer hover:underline items-center flex" onClick={handleClearCompleted}>
                   Clear completed
-                </div>
+                </div> */}
               </div>
             </div>
             <p className="m-[65px] text-[10px] text-[#bfbfbf]">
