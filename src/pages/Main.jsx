@@ -100,7 +100,7 @@ const Main = () => {
               value={editData?.index}
               placeholder="what need to be done?"
               onChange={handleFormdata("MainInput")}
-              className="border-2 border-white outline-none h-[64px] w-[80vh] x-[16px] pl-3 shadow-lg overflow-hidden"
+              className="border-2 border-white outline-none h-[64px] w-[80vh] x-[16px] pl-3 shadow-lg overflow-hidden "
               type="text"
             />
 
@@ -113,7 +113,7 @@ const Main = () => {
                         {globalState.editingIndex === index ? (
                           <div>
                             <input
-                              className="w-96 h-11 ml-2 pl-5 py-2 outline-none border-2  shadow-md bg-[##f5f5f5]"
+                              className=" w-96 h-11 ml-2 pl-5 py-2 outline-none border-2 shadow-md bg-[##f5f5f5] "
                               value={item.MainInput}
                               onChange={(e) => {
                                 dispatch({
@@ -125,16 +125,20 @@ const Main = () => {
                                 });
                               }}
                             />
-                            <button onClick={() => handleEdit()}>Cancel</button>
+                            <button className=" group" onClick={() => handleEdit()}>
+                              Cancel
+                            </button>
                           </div>
                         ) : (
-                          <Checkbox
-                            className={checkstatus[index] ? "line-through rounded" : ""}
-                            onChange={onChange(index)}
-                            checked={checkstatus[index] || false}
-                          >
-                            <p> {item?.MainInput}</p>
-                          </Checkbox>
+                          <div className="break-all text-left">
+                            <Checkbox
+                              className={checkstatus[index] ? "line-through text-[#d9d9d9] " : ""}
+                              onChange={onChange(index)}
+                              checked={checkstatus[index] || false}
+                            >
+                              <p> {item?.MainInput}</p>
+                            </Checkbox>
+                          </div>
                         )}
                         <div className="text-right flex items-center ">
                           <div
