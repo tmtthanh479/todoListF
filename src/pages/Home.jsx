@@ -8,7 +8,7 @@ export const Home = () => {
 
   return (
     <>
-      <div className="flex from-cyan-200 to-fuchsia-200 bg-gradient-to-r h-[100vh]">
+      <div className="flex bg-[#F5F5F5] h-[100vh]">
         <div className="w-1/4 ">
           {" "}
           <Sidebars />

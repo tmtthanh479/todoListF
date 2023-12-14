@@ -1,5 +1,5 @@
 import { ToastWaring } from "../utils";
-import { ADD_AlltodoList, ADD_MENU, ADD_SETTING, DEL } from "./Contants";
+import { ADD_AlltodoList, ADD_MENU, ADD_SETTING, DEL, EDIT, UPDATE_EDIT, UpdateEdit } from "./Contants";
 
 const menu = localStorage.getItem("menu");
 const setting = localStorage.getItem("setting");
@@ -11,7 +11,9 @@ console.log("🚀 ~ file: Reducer.js:9 ~ allData:", allData);
 export const initState = {
   menu: menu ? JSON.parse(menu) : [],
   setting: setting ? JSON.parse(setting) : {},
-  allData: allData ? JSON.parse(allData) : [],
+  allData: allData ? JSON.parse(allData) : ["false"],
+  editData: undefined,
+  editingIndex: null,
 };
 
 export const reducer = (state, action) => {
@@ -44,6 +46,26 @@ export const reducer = (state, action) => {
       localStorage.setItem("allData", JSON.stringify(updateDel.allData));
 
       return updateDel;
+
+    case EDIT:
+      return {
+        ...state,
+        editingIndex: action.payload,
+      };
+
+    case UPDATE_EDIT:
+      const updatedEditData = {
+        ...state,
+        allData: state.allData.map((item, index) => {
+          if (index === state.editingIndex) {
+            return { ...item, ...action.payload };
+          }
+          return item;
+        }),
+        editingIndex: null,
+      };
+      localStorage.setItem("allData", JSON.stringify(updatedEditData.allData));
+      return updatedEditData;
 
     default:
       return state;
