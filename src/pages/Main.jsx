@@ -109,13 +109,13 @@ const Main = () => {
                       className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
                       onClick={() => setFilter("false")}
                     >
-                      Done
+                      Active
                     </div>
                     <div
                       className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
                       onClick={() => setFilter("true")}
                     >
-                      False
+                      Completed
                     </div>
                   </div>
                 </div>
