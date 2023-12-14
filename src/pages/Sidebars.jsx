@@ -3,7 +3,7 @@ import React from "react";
 const Sidebars = () => {
   return (
     <>
-      <div className="border-[1px] border-white shadow-lg py-10 px-5 bg-transparent rounded-xl h-full">
+      <div className="border-[1px] border-white shadow-lg py-10 px-5 bg-transparent rounded-xl h-full bg-[rgba(255, 255, 255, .6)]">
         <p className="text-xl text-center font-semibold py-5">welcome </p>
         <p>
           {" "}

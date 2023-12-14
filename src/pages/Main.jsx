@@ -86,7 +86,7 @@ const Main = () => {
               type="text"
             />
 
-            <div className="border-white border-[1px] shadow-xl p mt-2 bg-white  ">
+            <div className="border-white border-[1px] shadow-xl  bg-white  ">
               {filteredData.map((item, index) => (
                 <ul key={index}>
                   <div className="flex justify-between border-y-[1px] p-2   items-center ">
@@ -94,6 +94,7 @@ const Main = () => {
                       className={checkstatus[index] ? "line-through" : ""}
                       onChange={onChange(index)}
                       checked={checkstatus[index] || false}
+                      onDoubleClick={() => handleEdit(index)}
                     >
                       <p> {item?.MainInput}</p>
                     </Checkbox>
@@ -105,8 +106,8 @@ const Main = () => {
                         >
                           x
                         </div>
-                        <div onClick={() => handleEdit(index)}>edit</div>
 
+                        <div onClick={() => handleEdit(index)}>edit</div>
                         {globalState.editingIndex === index && (
                           <div>
                             <input
@@ -122,13 +123,6 @@ const Main = () => {
                               }}
                             />
                             <button onClick={() => handleEdit()}>Cancel</button>
-                            <button
-                              onClick={() => {
-                                handleEdit();
-                              }}
-                            >
-                              Save
-                            </button>
                           </div>
                         )}
                       </div>
@@ -138,6 +132,7 @@ const Main = () => {
               ))}
               <div className="flex border-t-[1px] text-[#777] py-[10px] px-[15px]">
                 <div className="items-start">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
+
                 <div className="flex items-center mx-auto">
                   <div
                     className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
