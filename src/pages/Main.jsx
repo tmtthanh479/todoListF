@@ -7,9 +7,9 @@ const Main = () => {
   const [globalState, dispatch] = useGlobalState();
   const { allData, editData } = globalState;
   const [filter, setFilter] = useState("all");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(false);
   const inputRef = useRef();
-
+  const [formErro, setFormErro] = useState({});
   // get data
   const handleFormdata = (name) => (ev) => {
     const { value } = ev.target;
@@ -52,12 +52,31 @@ const Main = () => {
       return true;
     }
   });
+  // handle clearDone
+  const handleClearCompleted = () => {
+    dispatch({
+      type: ADD_AlltodoList,
+      payload: {
+        allData: allData.filter((item) => !item?.MainInput),
+      },
+    });
+  };
 
   return (
     <>
       <form
         onSubmit={(event) => {
           const elements = document.querySelectorAll("input");
+          let formErro = {};
+          let mess;
+          mess = ``;
+
+          if (!formData.MainInput) {
+            formErro.MainInput = mess;
+            setFormErro(formErro);
+            event.preventDefault();
+            return;
+          }
 
           dispatch({
             type: ADD_AlltodoList,
@@ -67,13 +86,12 @@ const Main = () => {
           });
 
           inputRef.current.value = "";
-          event.preventDefault();
         }}
       >
         <div className=" justify-center flex">
           <div className="text-center ">
             <div className="p-10">
-              <p className=" text-7xl font-bold text-[#F3E0E0] ">todos</p>
+              <p className=" text-7xl font-[100px] text-[#AF2F2F26] ">todos</p>
             </div>
             <input
               ref={inputRef}
@@ -88,14 +106,14 @@ const Main = () => {
 
             <div className="border-white border-[1px] shadow-xl  bg-white  ">
               {filteredData.map((item, index) => (
-                <ul key={index}>
+                <ul className="group" onDoubleClick={() => handleEdit(index)} key={index}>
                   <div className="flex justify-between border-y-[1px] p-2    items-center  ">
                     <div className="flex items-center my-auto cursor-pointer  ">
                       <div className="flex items-center mx-auto my-auto cursor-pointer justify-between w-[550px]  ">
                         {globalState.editingIndex === index ? (
                           <div>
                             <input
-                              className="w-96 h-11 ml-2 pl-5 py-2 outline-none border-2 shadow-md bg-[##f5f5f5]"
+                              className="w-96 h-11 ml-2 pl-5 py-2 outline-none border-2  shadow-md bg-[##f5f5f5]"
                               value={item.MainInput}
                               onChange={(e) => {
                                 dispatch({
@@ -111,20 +129,19 @@ const Main = () => {
                           </div>
                         ) : (
                           <Checkbox
-                            className={checkstatus[index] ? "line-through" : ""}
+                            className={checkstatus[index] ? "line-through rounded" : ""}
                             onChange={onChange(index)}
                             checked={checkstatus[index] || false}
-                            // onClick={() => handleEdit(index)}
                           >
-                            <p onDoubleClick={() => handleEdit(index)}> {item?.MainInput}</p>
+                            <p> {item?.MainInput}</p>
                           </Checkbox>
                         )}
                         <div className="text-right flex items-center ">
                           <div
                             onClick={() => handleDelete(index)}
-                            className="cursor-pointer px-3 py-2 text-left transform transition-transform hover:scale-110 text-lg text[#cc9a9a] "
+                            className="cursor-pointer text-[#cc9a9a] font-semibold px-3 py-2 text-left transform  hover:text-[#6b4747] text-lg group-hover:opacity-100 opacity-0 transition-opacity  "
                           >
-                            x
+                            X
                           </div>
                         </div>
                       </div>
@@ -133,28 +150,31 @@ const Main = () => {
                 </ul>
               ))}
 
-              <div className="flex border-t-[1px] text-[#777] py-[10px] px-[15px]">
-                <div className="items-start">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
+              <div className="flex border-t-[1px] text-[14px] text-[#777]  px-[15px] shadow-customShadow py-[10px] ">
+                <div className="items-center flex">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
 
-                <div className="flex items-center mx-auto">
-                  <div
-                    className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
+                <div className="flex items-center mx-auto ">
+                  <button
+                    className="mx-[3px] px-[3px] py-[7px] border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
                     onClick={() => setFilter("all")}
                   >
                     All
-                  </div>
-                  <div
-                    className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
+                  </button>
+                  <button
+                    className="mx-[3px] px-[3px] py-[7px] border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
                     onClick={() => setFilter("false")}
                   >
                     Active
-                  </div>
-                  <div
-                    className="px-5 mx-5 border-[1px] border-gray-500 rounded cursor-pointer transform transition-transform hover:scale-110"
+                  </button>
+                  <button
+                    className="mx-[3px] px-[3px] py-[7px]  border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
                     onClick={() => setFilter("true")}
                   >
                     Completed
-                  </div>
+                  </button>
+                </div>
+                <div className="cursor-pointer hover:underline items-center flex" onClick={handleClearCompleted}>
+                  Clear completed
                 </div>
               </div>
             </div>

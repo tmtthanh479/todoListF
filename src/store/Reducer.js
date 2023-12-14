@@ -11,8 +11,8 @@ console.log("🚀 ~ file: Reducer.js:9 ~ allData:", allData);
 export const initState = {
   menu: menu ? JSON.parse(menu) : [],
   setting: setting ? JSON.parse(setting) : {},
-  allData: allData ? JSON.parse(allData) : ["false"],
-  editData: undefined,
+  allData: allData ? JSON.parse(allData) : [false],
+  editData: [false],
   editingIndex: [],
 };
 
