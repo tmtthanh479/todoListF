@@ -82,35 +82,20 @@ const Main = () => {
               value={editData?.index}
               placeholder="what need to be done?"
               onChange={handleFormdata("MainInput")}
-              className="border-2 border-white outline-none h-[64px] w-[80vh] x-[16px] pl-3 shadow-lg"
+              className="border-2 border-white outline-none h-[64px] w-[80vh] x-[16px] pl-3 shadow-lg overflow-hidden"
               type="text"
             />
 
             <div className="border-white border-[1px] shadow-xl  bg-white  ">
               {filteredData.map((item, index) => (
                 <ul key={index}>
-                  <div className="flex justify-between border-y-[1px] p-2   items-center ">
-                    <Checkbox
-                      className={checkstatus[index] ? "line-through" : ""}
-                      onChange={onChange(index)}
-                      checked={checkstatus[index] || false}
-                      onDoubleClick={() => handleEdit(index)}
-                    >
-                      <p> {item?.MainInput}</p>
-                    </Checkbox>
-                    <div className="flex items-center my-auto cursor-pointer">
-                      <div className="flex items-center my-auto cursor-pointer">
-                        <div
-                          onClick={() => handleDelete(index)}
-                          className="cursor-pointer px-3 py-2 transform transition-transform hover:scale-110 text-lg text[#cc9a9a]"
-                        >
-                          x
-                        </div>
-
-                        <div onClick={() => handleEdit(index)}>edit</div>
-                        {globalState.editingIndex === index && (
+                  <div className="flex justify-between border-y-[1px] p-2    items-center  ">
+                    <div className="flex items-center my-auto cursor-pointer  ">
+                      <div className="flex items-center mx-auto my-auto cursor-pointer justify-between w-[550px]  ">
+                        {globalState.editingIndex === index ? (
                           <div>
                             <input
+                              className="w-96 h-11 ml-2 pl-5 py-2 outline-none border-2 shadow-md bg-[##f5f5f5]"
                               value={item.MainInput}
                               onChange={(e) => {
                                 dispatch({
@@ -124,12 +109,30 @@ const Main = () => {
                             />
                             <button onClick={() => handleEdit()}>Cancel</button>
                           </div>
+                        ) : (
+                          <Checkbox
+                            className={checkstatus[index] ? "line-through" : ""}
+                            onChange={onChange(index)}
+                            checked={checkstatus[index] || false}
+                            // onClick={() => handleEdit(index)}
+                          >
+                            <p onDoubleClick={() => handleEdit(index)}> {item?.MainInput}</p>
+                          </Checkbox>
                         )}
+                        <div className="text-right flex items-center ">
+                          <div
+                            onClick={() => handleDelete(index)}
+                            className="cursor-pointer px-3 py-2 text-left transform transition-transform hover:scale-110 text-lg text[#cc9a9a] "
+                          >
+                            x
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </ul>
               ))}
+
               <div className="flex border-t-[1px] text-[#777] py-[10px] px-[15px]">
                 <div className="items-start">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
 
