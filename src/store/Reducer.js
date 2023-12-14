@@ -13,7 +13,7 @@ export const initState = {
   setting: setting ? JSON.parse(setting) : {},
   allData: allData ? JSON.parse(allData) : ["false"],
   editData: undefined,
-  editingIndex: null,
+  editingIndex: [],
 };
 
 export const reducer = (state, action) => {
@@ -62,7 +62,6 @@ export const reducer = (state, action) => {
           }
           return item;
         }),
-        editingIndex: null,
       };
       localStorage.setItem("allData", JSON.stringify(updatedEditData.allData));
       return updatedEditData;

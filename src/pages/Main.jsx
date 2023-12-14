@@ -105,7 +105,7 @@ const Main = () => {
                         >
                           x
                         </div>
-                        {/* <div onClick={() => handleEdit(index)}>edit</div> */}
+                        <div onClick={() => handleEdit(index)}>edit</div>
 
                         {globalState.editingIndex === index && (
                           <div>
@@ -121,10 +121,10 @@ const Main = () => {
                                 });
                               }}
                             />
-                            <button onClick={() => handleEdit(null)}>Cancel</button>
+                            <button onClick={() => handleEdit()}>Cancel</button>
                             <button
                               onClick={() => {
-                                handleEdit(null);
+                                handleEdit();
                               }}
                             >
                               Save
