@@ -1,5 +1,5 @@
 import { ToastWaring } from "../utils";
-import { ADD_AlltodoList, ADD_MENU, ADD_SETTING, DEL, EDIT, UPDATE_EDIT, UpdateEdit } from "./Contants";
+import { ADD_AlltodoList, ADD_MENU, ADD_SETTING, CLEAR_FALSE, DEL, EDIT, UPDATE_EDIT, UpdateEdit } from "./Contants";
 
 const menu = localStorage.getItem("menu");
 const setting = localStorage.getItem("setting");
@@ -12,7 +12,7 @@ export const initState = {
   menu: menu ? JSON.parse(menu) : [],
   setting: setting ? JSON.parse(setting) : {},
   allData: allData ? JSON.parse(allData) : [],
-  editData: [false],
+  editData: [true],
   editingIndex: [],
 };
 
@@ -65,6 +65,15 @@ export const reducer = (state, action) => {
       };
       localStorage.setItem("allData", JSON.stringify(updatedEditData.allData));
       return updatedEditData;
+
+    case CLEAR_FALSE:
+      const updatedClearFalseState = {
+        ...state,
+        allData: state.allData.filter((item, index) => !state.checkstatus[index]),
+        checkstatus: state.checkstatus.filter((status, index) => !status),
+      };
+      localStorage.setItem("allData", JSON.stringify(updatedClearFalseState.allData));
+      return updatedClearFalseState;
 
     default:
       return state;

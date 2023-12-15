@@ -5,3 +5,4 @@ export const DEL = "Del";
 export const UpdateEdit = "updateEdit";
 export const EDIT = "Edit";
 export const UPDATE_EDIT = "UPDATE_EDIT";
+export const CLEAR_FALSE = "ClearFalse";

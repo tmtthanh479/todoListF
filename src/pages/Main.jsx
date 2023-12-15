@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useGlobalState } from "../hooks";
-import { ADD_AlltodoList, DEL, EDIT, UPDATE_EDIT } from "../store/Contants";
+import { ADD_AlltodoList, DEL, EDIT, UPDATE_EDIT, CLEAR_FALSE } from "../store/Contants";
 import { Affix, Checkbox } from "antd";
 
 const Main = () => {
   const [globalState, dispatch] = useGlobalState();
-  const { allData, editData } = globalState;
+  const { allData, editData, CLEAR_FALSE } = globalState;
   const [filter, setFilter] = useState("all");
   const [formData, setFormData] = useState(false);
   const inputRef = useRef();
@@ -47,18 +47,21 @@ const Main = () => {
     if (filter === "true") {
       return checkstatus[index] === true;
     } else if (filter === "false") {
-      return checkstatus[index] === false;
-    } else {
       return true;
+    } else {
+      return checkstatus[index] !== true;
     }
   });
-  // handle clearDone
+
+  // count data
+  const allItemCount = allData.length;
+  const activeItemCount = allData.filter((item, index) => !checkstatus[index]).length;
+  const completedItemCount = allData.filter((item, index) => checkstatus[index]).length;
+
+  // handle clear
   const handleClearCompleted = () => {
     dispatch({
-      type: ADD_AlltodoList,
-      payload: {
-        allData: allData.filter((item) => !item?.MainInput),
-      },
+      type: CLEAR_FALSE,
     });
   };
 
@@ -132,11 +135,13 @@ const Main = () => {
                         ) : (
                           <div className="break-all text-left">
                             <Checkbox
-                              className={checkstatus[index] ? "line-through text-[#d9d9d9] " : ""}
+                              className={`${checkstatus[index] && filter !== "all" ? "line-through" : ""} ${
+                                checkstatus[index] && filter === "true"
+                              }`}
                               onChange={onChange(index)}
                               checked={checkstatus[index] || false}
                             >
-                              <p> {item?.MainInput}</p>
+                              <p>{item?.MainInput}</p>
                             </Checkbox>
                           </div>
                         )}
@@ -155,27 +160,40 @@ const Main = () => {
               ))}
 
               <div className="flex border-t-[1px] text-[14px] text-[#777]  px-[15px] shadow-customShadow py-[10px] ">
-                <div className="items-center flex">{allData.length > 0 ? `Item left: ${allData.length}` : null}</div>
+                <div className="items-center flex">
+                  {filter === "all" && allItemCount > 0 ? `Item left:  ${activeItemCount} ` : null}
+                  {filter === "false" && activeItemCount > 0 ? `Item left: ${allItemCount}` : null}
+                  {filter === "true" && completedItemCount > 0 ? `Item left: ${completedItemCount}` : null}
+                </div>
 
                 <div className="flex items-center mx-auto ">
                   <button
-                    className="mx-[3px] px-[3px] py-[7px] border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
-                    onClick={() => setFilter("all")}
+                    className={`mx-[3px] px-[3px] py-[7px]  transform transition-transform hover:scale-110 ${
+                      filter === "false" ? "border-[1px] border-gray-500 rounded " : ""
+                    }`}
+                    onClick={() => setFilter("false")}
                   >
                     All
                   </button>
                   <button
-                    className="mx-[3px] px-[3px] py-[7px] border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
-                    onClick={() => setFilter("false")}
+                    className={`mx-[3px] px-[3px] py-[7px]  transform transition-transform hover:scale-110 ${
+                      filter === "all" ? "border-[1px] border-gray-500 rounded " : ""
+                    }`}
+                    onClick={() => setFilter("all")}
                   >
                     Active
                   </button>
                   <button
-                    className="mx-[3px] px-[3px] py-[7px]  border-[1px] border-gray-500 rounded  transform transition-transform hover:scale-110"
-                    onClick={() => setFilter("true")}
+                    className={`mx-[3px] px-[3px] py-[7px]  transform transition-transform hover:scale-110 ${
+                      filter === "true" ? "border-[1px] border-gray-500 rounded " : ""
+                    }`}
+                    onClick={() => {
+                      setFilter("true");
+                    }}
                   >
                     Completed
                   </button>
+                  {/* <button onClick={handleClearCompleted}>clear</button> */}
                 </div>
                 {/* <div className="cursor-pointer hover:underline items-center flex" onClick={handleClearCompleted}>
                   Clear completed
