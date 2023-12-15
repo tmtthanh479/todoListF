@@ -91,7 +91,7 @@ const Main = () => {
         <div className=" justify-center flex">
           <div className="text-center ">
             <div className="p-10">
-              <p className=" text-7xl font-[100px] text-[#AF2F2F26] ">todos</p>
+              <p className=" text-8xl font-bold text-[#AF2F2F26] ">todos</p>
             </div>
             <input
               ref={inputRef}
